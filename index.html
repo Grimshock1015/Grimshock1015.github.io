@@ -12,11 +12,11 @@
       </header>
     <div class="form-container">
       <div class="form-card">
-        <form class="image-form" id="image-form">
-            <div class="image-form-header">
+         <div class="image-form-header">
                 <h1>Import new art</h1>
                 <button class="toggle-btn" id="toggle-btn" type="button"></button>
             </div>
+        <form class="image-form" id="image-form">
             <div class="image-form-body">
               <div class="form-group">
                 <label class="form-group-label" for="image-title">Title</label>
@@ -46,6 +46,28 @@
           </form>
         </div>
     </div>
+
+    <div class="display-container" id="display-container">
+      <div class="display-card" id="display-card">
+        <div class="display-card-header">
+          <h1>Image Gallery</h1>
+      </div>
+      <div class="display" id="display">
+        <div class="display-image-header">
+          <h1 id="display-title">Image Title</h1>
+          <h2 id="display-author">Author</h2>
+        </div>
+        <img src="" alt="Artwork" id="display-image" class="display-image"/>
+        <button class="delete-btn" id="delete-btn" type="button">Delete Image</button>
+        <div class="change-image-row" id="change-image-row">
+          <button class="change-image-row-prev" id="prev-image-btn" type="button">Prev</button>
+          <button class="change-image-row-next" id="next-image-btn" type="button">Next</button>
+        </div>
+      </div>
+    </div>
+
+
+
     <footer>
       <a href="/credits.html">credits</a>
     </footer>
