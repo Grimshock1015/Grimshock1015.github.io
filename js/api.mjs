@@ -76,7 +76,23 @@ export function deleteImage(imageId) {
 }
 
 // add a comment to an image
-export function addComment(imageId, author, content) {}
+export function addComment(imageId, author, content) {
+    let comments = JSON.parse(localStorage.getItem('comments') || '[]');
+    const commentId = generateID();
+    const newComment = {
+        commentId: commentId,
+        imageId: imageId,
+        author: author,
+        content: content,
+        date: new Date()
+    }
+    comments.push(newComment);
+    localStorage.setItem('comments', JSON.stringify(comments));
+}
 
 // delete a comment to an image
-export function deleteComment(commentId) {}
+export function deleteComment(commentId) {
+    let comments = JSON.parse(localStorage.getItem('comments') || '[]');
+    comments = comments.filter(comment => comment.commentId !== commentId);
+    localStorage.setItem('comments', JSON.stringify(comments));
+}
