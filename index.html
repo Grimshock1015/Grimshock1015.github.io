@@ -7,105 +7,87 @@
     <script type="module" src="js/index.mjs"></script>
 </head>
 <body>
-      <header>
-        <h1 class="title">The Web Gallery</h1>
-      </header>
+    <header>
+      <h1 class="title">The Web Gallery</h1>
+    </header>
     <div class="form-container">
       <div class="form-card">
-         <div class="image-form-header">
-                <h1>Import new art</h1>
-                <button class="toggle-btn" id="toggle-btn" type="button"></button>
-            </div>
+        <div class="image-form-header">
+          <h1>Import new art</h1>
+          <button class="toggle-btn" id="toggle-btn" type="button"></button>
+        </div>
         <form class="image-form" id="image-form">
-            <div class="image-form-body">
-              <div class="form-group">
-                <label class="form-group-label" for="image-title">Title</label>
-                <input 
-                  type="text" 
-                  id="image-title"
-                  placeholder="Enter Artwork Title" 
-                  required/>
-              </div>
-              <div class="form-group">
-                <label class="form-group-label" for="image-author">Author</label>
-                <input 
-                  type="text" 
-                  id="image-author"
-                  placeholder="Enter Author Name" 
-                  required/>
-              </div>
-              <div class="form-group">
-                <label class="form-group-label" for="image-url">Image URL</label>
-                <input 
-                  type="text" 
-                  id="image-url"
+          <div class="image-form-body">
+            <div class="form-group">
+              <label class="form-group-label" for="image-title">Title</label>
+              <input 
+                type="text" 
+                id="image-title"
+                placeholder="Enter Artwork Title" 
+                required/>
+            </div>
+            <div class="form-group">
+              <label class="form-group-label" for="image-author">Author</label>
+              <input 
+                type="text" 
+                id="image-author"
+                placeholder="Enter Author Name" 
+                required/>
+            </div>
+            <div class="form-group">
+              <label class="form-group-label" for="image-url">Image URL</label>
+              <input 
+                type="text" 
+                id="image-url"
                 placeholder="Enter Image URL" 
                 required/>
               <button class="form-btn" type="submit" id="image-form-button"> <img src="../media/upload_button.png" alt="Add Image" class="upload-icon"/> Add Image</button>
             </div>
           </form>
-        </div>
+      </div>
     </div>
 
     <div class="display-container" id="display-container">
       <div class="display-card" id="display-card">
         <div class="display-card-header">
           <h1>Image Gallery</h1>
-      </div>
-      <div class="display" id="display">
-        <div class="display-image-header">
-          <h1 id="display-title">Image Title</h1>
-          <h2 id="display-author">Author</h2>
         </div>
-        <img src="" alt="Artwork" id="display-image" class="display-image"/>
-        <button class="delete-btn" id="delete-btn" type="button">Delete Image</button>
-        <div class="change-image-row" id="change-image-row">
-          <button class="change-image-row-prev" id="prev-image-btn" type="button">Prev</button>
-          <button class="change-image-row-next" id="next-image-btn" type="button">Next</button>
+        <div class="display" id="display">
+          <div class="display-image-header">
+            <h1 id="display-title">Image Title</h1>
+            <h2 id="display-author">Author</h2>
+          </div>
+          <img src="" alt="Artwork" id="display-image" class="display-image"/>
+          <button class="delete-btn" id="delete-btn" type="button">Delete Image</button>
+          <div class="change-image-row" id="change-image-row">
+            <button class="change-image-row-prev" id="prev-image-btn" type="button">Prev</button>
+            <button class="change-image-row-next" id="next-image-btn" type="button">Next</button>
+          </div>
         </div>
-      </div>
 
-      <div class="comment-section" id="comment-section">
-        <h2>Comments</h2>
-        <form class="comment-form" id="comment-form">
-          <label for="comment-author-input">Author</label>
-          <input
-            type="text"
-            id="comment-author-input"
-            placeholder="Input author name."
-            required />
-          <label for="comment-input">Add comments</label>
-          <input
-            type="text"
-            id="comment-input"
-            placeholder="Add a comment..." 
-            required />
-          <button type="submit" id="post-comment-btn">Post</button>
-        </form>
-        <div class="display-comments" id="display-comments">
-          <!----
-          <div class="comment-large-container" id="comment-large-container">
-            <div class="comment-box" id="comment-box">
-              <h1>Comment author</h1>
-              <p1>This is a date.</p1>
-              <p2>This is a comment.</p2>
-            </div>
-            <button> X </button>
+        <div class="comment-section" id="comment-section">
+          <h2>Comments</h2>
+          <form class="comment-form" id="comment-form">
+            <label for="comment-author-input">Author</label>
+            <input
+              type="text"
+              id="comment-author-input"
+              placeholder="Input author name."
+              required />
+            <label for="comment-input">Add comments</label>
+            <input
+              type="text"
+              id="comment-input"
+              placeholder="Add a comment..." 
+              required />
+            <button type="submit" id="post-comment-btn">Post</button>
+          </form>
+          <div class="display-comments" id="display-comments">
           </div>
-          <div class="comment-large-container" id="comment-large-container">
-            <div class="comment-box" id="comment-box">
-              <h1>Comment author</h1>
-              <p1>This is a date.</p1>
-              <p2>This is a comment.</p2>
-            </div>
-            <button> X </button>
-          </div>
-          -->
         </div>
       </div>
     </div>
-
-
+    
     <footer>
       <a href="/credits.html">credits</a>
     </footer>
