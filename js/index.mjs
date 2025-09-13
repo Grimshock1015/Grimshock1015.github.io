@@ -157,13 +157,9 @@ function showComments(imageId, page) {
             showComments(imageId, currentPage);
         });
 
-        
-
         commentContainerDiv.appendChild(commentDiv);
         commentContainerDiv.appendChild(deleteCommentBtn);
         commentsSection.appendChild(commentContainerDiv);
-
-
     }
 
     const changepageDiv = document.createElement('div');
