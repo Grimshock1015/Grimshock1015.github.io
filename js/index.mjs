@@ -19,9 +19,9 @@ toggleBtn.addEventListener('click', function(e) {
 
 imageForm.addEventListener('submit', function(e) {
     e.preventDefault();
-    const title = document.getElementById('image-title').value;
-    const author = document.getElementById('image-author').value;
-    const url = document.getElementById('image-url').value; 
+    const title = document.getElementById('image-title').value.trim();
+    const author = document.getElementById('image-author').value.trim();
+    const url = document.getElementById('image-url').value.trim(); 
     addImage(title, author, url);
     showImages(getImages());
     imageForm.reset();
@@ -41,6 +41,8 @@ function showImages(Images) {
         commentForm.style.display = 'none';
         return;
     }
+
+    // https://stackoverflow.com/questions/16125215/hide-conditionally-button-with-css-or-javascript
 
     const imageTitle = Images[currentIndex].title;
     const imageAuthor = Images[currentIndex].author;
@@ -68,6 +70,9 @@ deleteBtn.addEventListener('click', function(e) {
         return; // No images to delete
     }
     const imageIdToDelete = images[currentIndex].imageId;
+    let comments = JSON.parse(localStorage.getItem('comments') || '[]');
+    comments = comments.filter(comment => comment.imageId !== imageIdToDelete); // Remove comments associated with the image
+    localStorage.setItem('comments', JSON.stringify(comments));
     deleteImage(imageIdToDelete);
     images = getImages();
     if (images.length === 0) {
@@ -97,7 +102,6 @@ prevImageBtn.addEventListener('click', function(e) {
     }
     currentIndex = (currentIndex - 1 + images.length) % images.length; // Make sure it is positive by adding the length and cycles
     showImages(images);
-    console.log('currentIndex:', currentIndex, 'url:', images[currentIndex].url);
 });
 
 
@@ -111,6 +115,17 @@ function showComments(imageId, page) {
     let comments = JSON.parse(localStorage.getItem('comments') || '[]');
     comments = comments.filter(comment => comment.imageId === imageId); // Only keep comments for this image
 
+    if (comments.length === 0) {
+        const commentContainerDiv = document.createElement('div');
+        commentContainerDiv.className = 'comment-large-container';
+        const noCommentsMsg = document.createElement('p');
+        noCommentsMsg.className = 'comment-author';
+        noCommentsMsg.textContent = 'No comments yet.';
+        commentContainerDiv.appendChild(noCommentsMsg);
+        commentsSection.appendChild(commentContainerDiv);
+        return;
+    }
+
     comments.sort(function(a, b) {
         return new Date(b.date) - new Date(a.date);
     }); //https://stackoverflow.com/questions/10123953/how-to-sort-an-object-array-by-date-property
@@ -118,9 +133,9 @@ function showComments(imageId, page) {
     const totalPages = Math.ceil(comments.length / commentsPerPage); // Gets total no. of pages possible
     currentPage = Math.min(Math.max(1, page), totalPages); // Ensure the range
     
-    const start = (currentPage - 1) * commentsPerPage;
+    const start = (currentPage - 1) * commentsPerPage;  // Increses by 10
     const end = start + commentsPerPage;
-    const commentsToShow = comments.slice(start, end);
+    const commentsToShow = comments.slice(start, end);  // Does not contain end index
 
     for (const comment of commentsToShow) {
         const commentContainerDiv = document.createElement('div');
@@ -129,9 +144,9 @@ function showComments(imageId, page) {
         const commentDiv = document.createElement('div');
         commentDiv.className = 'comment-box';
         commentDiv.innerHTML = `
-        <h1>${comment.author}</h1>
-        <p1 class="comment-date">${new Date(comment.date).toLocaleDateString()}</p1>
-        <p2>${comment.content}</p2>`;
+        <p class="comment-author">${comment.author}</p>
+        <p class="comment-date">${new Date(comment.date).toLocaleDateString()}</p>
+        <p class="comment-content">${comment.content}</p>`;
 
         const deleteCommentBtn = document.createElement('button');
         deleteCommentBtn.textContent = 'X';
@@ -142,17 +157,55 @@ function showComments(imageId, page) {
             showComments(imageId, currentPage);
         });
 
+        
+
         commentContainerDiv.appendChild(commentDiv);
         commentContainerDiv.appendChild(deleteCommentBtn);
         commentsSection.appendChild(commentContainerDiv);
+
+
     }
+
+    const changepageDiv = document.createElement('div');
+    changepageDiv.className = 'change-comment-row';
+
+    const prevCommentPageBtn = document.createElement('button');
+    prevCommentPageBtn.className = 'change-comment-row-prev';
+    prevCommentPageBtn.textContent = 'Prev';
+    if (currentPage === 1) {
+        prevCommentPageBtn.disabled = true; // Disable if on first page
+    }
+    prevCommentPageBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        if (currentPage > 1){
+            currentPage--;
+            showComments(imageId, currentPage);
+        }
+    });
+
+    const nextCommentPageBtn = document.createElement('button');
+    nextCommentPageBtn.className = 'change-comment-row-next';
+    nextCommentPageBtn.textContent = 'Next';
+    if (currentPage === totalPages) {
+        nextCommentPageBtn.disabled = true; // Disable if on last page
+    }
+    nextCommentPageBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        if (currentPage < totalPages){
+            currentPage++;
+            showComments(imageId, currentPage);
+        }
+    });
+    changepageDiv.appendChild(prevCommentPageBtn);
+    changepageDiv.appendChild(nextCommentPageBtn);
+    commentsSection.appendChild(changepageDiv);
 }
 
 
 commentForm.addEventListener('submit', function(e) {
     e.preventDefault();
-    const author = document.getElementById('comment-author-input').value;
-    const comment = document.getElementById('comment-input').value;
+    const author = document.getElementById('comment-author-input').value.trim();
+    const comment = document.getElementById('comment-input').value.trim();
     const images = getImages();
     if (images.length === 0) {
         return; // No images to comment on
@@ -160,10 +213,8 @@ commentForm.addEventListener('submit', function(e) {
     const imageId = images[currentIndex].imageId;
     addComment(imageId, author, comment);
     commentForm.reset();
+    currentPage = 1; // Reset to first comment page
     showComments(imageId, currentPage);
 });
-
-
-
 
 showImages(getImages());
